@@ -5,11 +5,38 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testBalancedBrackets();
+        testQueueOfStacksChallenge();
+//        testBalancedBrackets();
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
     }
+
+
+    /***********************************************
+     *
+     * Queue of 2 Stacks: Implement a queue with 2 stacks
+     */
+
+    public static void testQueueOfStacksChallenge() {
+        //should print following output:
+        //14
+        //14
+
+        Queue<Integer> queue = new Queue<>();
+        queue.enqueue(42);
+        queue.dequeue();
+        queue.enqueue(14);
+        System.out.println(queue.peek());
+        queue.enqueue(28);
+        System.out.println(queue.peek());
+        queue.enqueue(60);
+        queue.enqueue(78);
+        queue.dequeue();
+        queue.dequeue();
+    }
+
+
 
     /***********************************************
      *
