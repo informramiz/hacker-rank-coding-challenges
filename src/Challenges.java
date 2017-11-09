@@ -6,7 +6,41 @@ import java.util.List;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testArrayLeftRotation();
+        testStringAnagrams();
+//        testArrayLeftRotation();
+    }
+
+    /* * *************************************
+     * Identify characters needed to be deleted to make two string Anagrams
+     */
+    public static void testStringAnagrams() {
+        String first = "cde";
+        String second = "abc";
+        //shout be 4
+        int number = numberNeededForMakingStringAnagram(first, second);
+        System.out.println(number);
+    }
+
+    public static int numberNeededForMakingStringAnagram(String first, String second) {
+        int firstCount[] = new int[26];
+        int secondCount[] = new int[26];
+
+        for (int i = 0; i < first.length(); ++i) {
+            int index = first.charAt(i) - 'a';
+            firstCount[index]++;
+        }
+
+        for (int i = 0; i < second.length(); ++i) {
+            int index = second.charAt(i) - 'a';
+            secondCount[index]++;
+        }
+
+        int diff = 0;
+        for (int i = 0; i < 26; ++i) {
+            diff += Math.abs(firstCount[i] - secondCount[i]);
+        }
+
+        return diff;
     }
 
     /******************************************
