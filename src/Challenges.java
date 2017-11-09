@@ -1,13 +1,62 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ramiz on 11/9/17.
  */
 public class Challenges {
     public static void main(String args[]) {
-        testStringAnagrams();
+        testRansomNoteChallenge();
+//        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    /**************************
+     * Ransom Note Challenge solution: Identify if note string can be made of
+     * words from magazine string
+     */
+
+    public static void testRansomNoteChallenge() {
+        String magazine = "give me one grand today night";
+        String note = "give one grand today";
+
+        //should print true
+        System.out.println(solveRansomNote(magazine, note));
+    }
+
+    public static boolean solveRansomNote(String magazine, String note) {
+        HashMap<String, Integer> magazineMap = new HashMap<>();
+        HashMap<String, Integer> noteMap = new HashMap<>();
+
+        String magazineWords[] = magazine.split(" ");
+        String []noteWords = note.split(" ");
+
+        initializeMap(magazineMap, magazineWords);
+        initializeMap(noteMap, noteWords);
+
+        Set set = noteMap.entrySet();
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry)iterator.next();
+            String key = (String)entry.getKey();
+            Integer value = (Integer)entry.getValue();
+
+            if (!magazineMap.containsKey(key) || magazineMap.get(key) < value) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static void initializeMap(Map<String, Integer> map, String[] words) {
+        for (int i = 0 ; i < words.length; ++i) {
+            String word = words[i];
+            int prevCount = 0;
+            if (map.containsKey(word)) {
+                prevCount = map.get(word);
+            }
+            map.put(word, ++prevCount);
+        }
     }
 
     /* * *************************************
