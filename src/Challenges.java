@@ -5,9 +5,63 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
+        testBalancedBrackets();
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    /***********************************************
+     *
+     * Balanced Brackets problem: Identify if sequence of brackets
+     * is balanced or not
+     */
+
+    public static void testBalancedBrackets() {
+        String[] strings = {"{[()]}", "{[(])}", "{{[[(())]]}}"};
+        for (String string : strings) {
+            System.out.println((isBalanced(string)) ? "YES" : "NO");
+        }
+    }
+
+
+    public static boolean isOpeningBracket(char ch) {
+        return (ch == '(' || ch == '{' || ch == '[');
+    }
+
+    public static boolean isClosingBracket(char ch) {
+        return (ch == ')' || ch == '}' || ch == ']');
+    }
+
+    public static boolean areSameBrackets(char opening, char closing) {
+        if (opening == '(' && closing == ')') {
+            return true;
+        } else if (opening == '{' && closing == '}') {
+            return true;
+        } else if (opening == '[' && closing == ']') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean isBalanced(String expression) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < expression.length(); ++i) {
+            char ch = expression.charAt(i);
+            if (isOpeningBracket(ch)) {
+                stack.push(ch);
+                continue;
+            }
+
+            if (isClosingBracket(ch)) {
+                if (stack.empty() || !areSameBrackets(stack.pop(), ch)) {
+                    return false;
+                }
+            }
+        }
+
+        return stack.isEmpty();
     }
 
     /* ****************************************************************
