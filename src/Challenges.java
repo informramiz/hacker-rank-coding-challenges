@@ -5,10 +5,45 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testRansomNoteChallenge();
+//        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
     }
+
+    /* ****************************************************************
+     *  Detect a cycle in a linked list. Note that the head pointer may be 'null' if the list is empty.
+     *
+     *   A Node is defined as:
+     *       class Node {
+     *           int data;
+     *          Node next;
+     *      }
+    ********************************************************************/
+
+    class Node {
+        int data;
+        Node next;
+    }
+
+    boolean hasCycle(Node head) {
+        if (head == null) {
+            return false;
+        }
+        Map<Node, Integer> map = new HashMap<Node, Integer>();
+        map.put(head, 1);
+
+        while(head.next != null) {
+            head = head.next;
+            if(map.containsKey(head)) {
+                return true;
+            }
+
+            map.put(head, 1);
+        }
+
+        return false;
+    }
+
 
     /**************************
      * Ransom Note Challenge solution: Identify if note string can be made of
