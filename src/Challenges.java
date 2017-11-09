@@ -32,9 +32,9 @@ public class Challenges {
         Map<Node, Integer> map = new HashMap<Node, Integer>();
         map.put(head, 1);
 
-        while(head.next != null) {
+        while (head.next != null) {
             head = head.next;
-            if(map.containsKey(head)) {
+            if (map.containsKey(head)) {
                 return true;
             }
 
@@ -63,7 +63,7 @@ public class Challenges {
         HashMap<String, Integer> noteMap = new HashMap<>();
 
         String magazineWords[] = magazine.split(" ");
-        String []noteWords = note.split(" ");
+        String[] noteWords = note.split(" ");
 
         initializeMap(magazineMap, magazineWords);
         initializeMap(noteMap, noteWords);
@@ -71,9 +71,9 @@ public class Challenges {
         Set set = noteMap.entrySet();
         Iterator iterator = set.iterator();
         while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            String key = (String)entry.getKey();
-            Integer value = (Integer)entry.getValue();
+            Map.Entry entry = (Map.Entry) iterator.next();
+            String key = (String) entry.getKey();
+            Integer value = (Integer) entry.getValue();
 
             if (!magazineMap.containsKey(key) || magazineMap.get(key) < value) {
                 return false;
@@ -84,7 +84,7 @@ public class Challenges {
     }
 
     public static void initializeMap(Map<String, Integer> map, String[] words) {
-        for (int i = 0 ; i < words.length; ++i) {
+        for (int i = 0; i < words.length; ++i) {
             String word = words[i];
             int prevCount = 0;
             if (map.containsKey(word)) {
