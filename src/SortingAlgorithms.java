@@ -69,4 +69,50 @@ public class SortingAlgorithms {
 
         return left;
     }
+
+    public static void mergeSort(int[] a) {
+        int[] tmpArray = new int[a.length];
+        int swapsCount = 0;
+        mergeSort(a, tmpArray, 0, a.length - 1);
+    }
+
+    private static void mergeSort(int[] a, int[] tmpArray, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+
+        int middle = (left + right) / 2;
+        mergeSort(a, tmpArray, left, middle);
+        mergeSort(a, tmpArray, middle + 1, right);
+        mergeHalves(a, tmpArray, left, right);
+    }
+
+    private static void mergeHalves(int[] a, int[] tmpArray, int leftStart, int rightEnd) {
+        int leftEnd = (leftStart + rightEnd) / 2;
+        int rightStart = leftEnd + 1;
+        int size = rightEnd - leftStart + 1;
+
+        int index = leftStart;
+        int left = leftStart;
+        int right = rightStart;
+
+        while (left <= leftEnd && right <= rightEnd) {
+            if (a[left] < a[right]) {
+                tmpArray[index] = a[left];
+                left++;
+            } else {
+                tmpArray[index] = a[right];
+                right++;
+            }
+
+            index++;
+        }
+
+        //copy remaining elements
+        System.arraycopy(a, left, tmpArray, index, leftEnd - left + 1);
+        System.arraycopy(a, right, tmpArray, index, rightEnd - right + 1);
+
+        //copy elements back
+        System.arraycopy(tmpArray, leftStart, a, leftStart, size);
+    }
 }

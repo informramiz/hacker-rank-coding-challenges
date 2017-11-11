@@ -5,7 +5,8 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testQuickSort();
+        testMergeSort();
+//        testQuickSort();
 //        testBubbleSort();
 //        testUniqueElementChallenge();
 //        testRunningMedian();
@@ -14,6 +15,17 @@ public class Challenges {
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    /**
+     * Merge sort algorithm: A highly efficient algorithm
+     */
+    public static void testMergeSort() {
+        int[] a = {2, 9, 11, 7, 10, 0, 15};
+        SortingAlgorithms.mergeSort(a);
+        for (int v : a) {
+            System.out.print(v + " ");
+        }
     }
 
     /*********************
