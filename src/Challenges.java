@@ -5,7 +5,8 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testBubbleSort();
+        testQuickSort();
+//        testBubbleSort();
 //        testUniqueElementChallenge();
 //        testRunningMedian();
 //        testQueueOfStacksChallenge();
@@ -13,6 +14,17 @@ public class Challenges {
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    /*********************
+     * Quick sort algorithm
+     */
+    public static void testQuickSort() {
+        int[] a = {2, 9, 11, 7, 10, 0, 15};
+        SortingAlgorithms.quickSort(a);
+        for (int v : a) {
+            System.out.print(v + " ");
+        }
     }
 
     /*********************
