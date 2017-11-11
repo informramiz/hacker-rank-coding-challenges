@@ -5,11 +5,138 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testQueueOfStacksChallenge();
+        testRunningMedian();
+//        testQueueOfStacksChallenge();
 //        testBalancedBrackets();
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    public static void testRunningMedian() {
+        Integer []values1 = {12, 4, 5, 3, 8, 7};
+        Integer []values2 = {
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+        };
+
+        PriorityQueue<Integer> minQueue = new PriorityQueue<>();
+        PriorityQueue<Integer> maxQueue = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer x, Integer y) {
+                return y - x;
+            }
+        });
+
+        for (Integer v : values2) {
+            if (minQueue.isEmpty() && maxQueue.isEmpty()) {
+                maxQueue.add(v);
+            } else {
+                if (v < maxQueue.peek()) {
+                    maxQueue.add(v);
+                } else {
+                    minQueue.add(v);
+                }
+
+                balanceHeaps(minQueue, maxQueue);
+            }
+
+            double median;
+            if (maxQueue.size() == minQueue.size()) {
+                median = (minQueue.peek() + maxQueue.peek()) / 2.0;
+            } else if (minQueue.size() > maxQueue.size()){
+                median = minQueue.peek();
+            } else {
+                median = maxQueue.peek();
+            }
+
+            System.out.println(String.format("Median: %.1f", median));
+        }
+    }
+
+    public static void balanceHeaps(PriorityQueue<Integer> minHeap, PriorityQueue<Integer> maxHeap) {
+        if (minHeap.size() - maxHeap.size() > 1) {
+            maxHeap.add(minHeap.poll());
+        } else if (maxHeap.size() - minHeap.size() > 1) {
+            minHeap.add(maxHeap.poll());
+        }
+    }
+
+    public static double getMedian1(PriorityQueue<Integer> queue) {
+        Stack<Integer> stack = new Stack<>();
+
+        int size = queue.size();
+        boolean isEven = queue.size() % 2 == 0;
+        int medianIndex = size / 2;
+        medianIndex = isEven ? (medianIndex - 1) : medianIndex;
+        //extract elements before median
+        for (int i = 0; i < medianIndex; i++) {
+            stack.push(queue.poll());
+        }
+
+        double median;
+        if (isEven) {
+            int m1 = queue.peek();
+            stack.push(queue.poll());
+            int m2 = queue.peek();
+
+            median = (m1 + m2) / 2.0;
+        } else {
+            median = queue.peek();
+        }
+
+        queue.addAll(stack);
+        return median;
+    }
+
+    public static double getMedian(PriorityQueue<Integer> queue) {
+        PriorityQueue<Integer> newQueue = new PriorityQueue<>();
+
+        int size = queue.size();
+        boolean isEven = queue.size() % 2 == 0;
+        int medianIndex = size / 2;
+        medianIndex = isEven ? (medianIndex - 1) : medianIndex;
+        //extract elements before median
+        for (int i = 0; i < medianIndex; i++) {
+            newQueue.add(queue.poll());
+        }
+
+        double median;
+        if (isEven) {
+            int m1 = queue.peek();
+            newQueue.add(queue.poll());
+            int m2 = queue.peek();
+            newQueue.add(queue.poll());
+
+            median = (m1 + m2) / 2.0;
+        } else {
+            median = queue.peek();
+        }
+
+        while (!queue.isEmpty()) {
+            newQueue.add(queue.poll());
+        }
+
+        queue.addAll(newQueue);
+
+        return median;
+    }
+
+    public static Integer getElement(Integer[] array, int n) {
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            index = index * 2 + 1;
+        }
+
+        return array[index];
     }
 
 
