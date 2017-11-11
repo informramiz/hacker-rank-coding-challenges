@@ -5,7 +5,8 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testBinarySearch();
+        testDFSConnectedRegionChallenge();
+//        testBinarySearch();
 //        testMergeSort();
 //        testQuickSort();
 //        testBubbleSort();
@@ -16,6 +17,21 @@ public class Challenges {
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    /***********************
+     * Max connected region
+     */
+    public static void testDFSConnectedRegionChallenge() {
+        int[][] matrix = {
+                {1, 1, 0, 0},
+                {0, 1, 1, 0},
+                {0, 0, 1, 0},
+                {1, 0, 0, 0}
+        };
+
+        int largestConnectedRegionCellsCount = Graph.getBiggestRegion(matrix);
+        System.out.println("Largest region cell count: " + largestConnectedRegionCellsCount);
     }
 
     /**************************
