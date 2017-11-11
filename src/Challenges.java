@@ -5,7 +5,8 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testUniqueElementChallenge();
+        testBubbleSort();
+//        testUniqueElementChallenge();
 //        testRunningMedian();
 //        testQueueOfStacksChallenge();
 //        testBalancedBrackets();
@@ -13,6 +14,18 @@ public class Challenges {
 //        testStringAnagrams();
 //        testArrayLeftRotation();
     }
+
+    /*********************
+     * optimized Bubble sort algorithm
+     */
+    public static void testBubbleSort() {
+        int[] a = {1, 3, 1, 6};
+        SortingAlgorithms.bubbleSort(a);
+        for (int v : a) {
+            System.out.print(v + " ");
+        }
+    }
+
 
     /********
      * A list of numbers has every number in pair except one number.
