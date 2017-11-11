@@ -5,13 +5,34 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testRunningMedian();
+        testUniqueElementChallenge();
+//        testRunningMedian();
 //        testQueueOfStacksChallenge();
 //        testBalancedBrackets();
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
     }
+
+    /********
+     * A list of numbers has every number in pair except one number.
+     * So one and only one number is unique and all other are in pairs
+     * Find that number
+     */
+    public static void testUniqueElementChallenge() {
+        int a[] = {1, 1, 2, 2, 7, 3, 3};
+        int result = 0;
+
+        for (int v : a) {
+            result = result ^ v;
+        }
+
+        System.out.println(result);
+    }
+
+    /**************************
+     * Find a running median from a list of unsorted numbers comming online
+     */
 
     public static void testRunningMedian() {
         Integer []values1 = {12, 4, 5, 3, 8, 7};
