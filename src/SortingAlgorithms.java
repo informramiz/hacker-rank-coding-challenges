@@ -70,24 +70,23 @@ public class SortingAlgorithms {
         return left;
     }
 
-    public static void mergeSort(int[] a) {
+    public static long mergeSort(int[] a) {
         int[] tmpArray = new int[a.length];
-        int swapsCount = 0;
-        mergeSort(a, tmpArray, 0, a.length - 1);
+        return mergeSort(a, tmpArray, 0, a.length - 1);
     }
 
-    private static void mergeSort(int[] a, int[] tmpArray, int left, int right) {
+    private static long mergeSort(int[] a, int[] tmpArray, int left, int right) {
         if (left >= right) {
-            return;
+            return 0;
         }
 
         int middle = (left + right) / 2;
-        mergeSort(a, tmpArray, left, middle);
-        mergeSort(a, tmpArray, middle + 1, right);
-        mergeHalves(a, tmpArray, left, right);
+        long swapsCount = mergeSort(a, tmpArray, left, middle);
+        swapsCount += mergeSort(a, tmpArray, middle + 1, right);
+        return swapsCount + mergeHalves(a, tmpArray, left, right);
     }
 
-    private static void mergeHalves(int[] a, int[] tmpArray, int leftStart, int rightEnd) {
+    private static long mergeHalves(int[] a, int[] tmpArray, int leftStart, int rightEnd) {
         int leftEnd = (leftStart + rightEnd) / 2;
         int rightStart = leftEnd + 1;
         int size = rightEnd - leftStart + 1;
@@ -95,13 +94,17 @@ public class SortingAlgorithms {
         int index = leftStart;
         int left = leftStart;
         int right = rightStart;
+        long swapsCount = 0;
 
         while (left <= leftEnd && right <= rightEnd) {
-            if (a[left] < a[right]) {
+            if (a[left] <= a[right]) {
                 tmpArray[index] = a[left];
                 left++;
             } else {
                 tmpArray[index] = a[right];
+                //number of swaps is the distance between right value index
+                //and the index where it is being moved to
+                swapsCount += right - index;
                 right++;
             }
 
@@ -114,5 +117,7 @@ public class SortingAlgorithms {
 
         //copy elements back
         System.arraycopy(tmpArray, leftStart, a, leftStart, size);
+
+        return swapsCount;
     }
 }

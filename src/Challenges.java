@@ -21,8 +21,13 @@ public class Challenges {
      * Merge sort algorithm: A highly efficient algorithm
      */
     public static void testMergeSort() {
-        int[] a = {2, 9, 11, 7, 10, 0, 15};
-        SortingAlgorithms.mergeSort(a);
+//        int[] a = {2, 9, 11, 7, 10, 0, 15};
+//        int[] a = {2, 4, 1};
+        int[] a = {2, 1, 3, 1, 2};
+//        int[] a = {1, 1, 1, 2, 2};
+        long swaps = SortingAlgorithms.mergeSort(a);
+        System.out.println("Swaps count: " + swaps);
+
         for (int v : a) {
             System.out.print(v + " ");
         }
