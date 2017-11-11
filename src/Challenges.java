@@ -5,7 +5,8 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testMergeSort();
+        testBinarySearch();
+//        testMergeSort();
 //        testQuickSort();
 //        testBubbleSort();
 //        testUniqueElementChallenge();
@@ -15,6 +16,16 @@ public class Challenges {
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    /**************************
+     * Binary search algorithm
+     */
+    public static void testBinarySearch() {
+        int[] a = {1, 2, 3, 4, 5};
+        int key = 3;
+        int keyIndex = SearchAlgorithms.binarySearch(a, key);
+        System.out.println("Key index: " + keyIndex);
     }
 
     /**
