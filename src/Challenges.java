@@ -5,7 +5,13 @@ import java.util.*;
  */
 public class Challenges {
     public static void main(String args[]) {
-        testDFSConnectedRegionChallenge();
+        testKnapSackSumChallenge();
+//        testKnapsack();
+//        testTextQueries();
+
+//        countNumbers();
+//        testStringTokens();
+//        testDFSConnectedRegionChallenge();
 //        testBinarySearch();
 //        testMergeSort();
 //        testQuickSort();
@@ -17,6 +23,172 @@ public class Challenges {
 //        testRansomNoteChallenge();
 //        testStringAnagrams();
 //        testArrayLeftRotation();
+    }
+
+    public static void testKnapSackSumChallenge() {
+//        int sum = 12;
+//        int[] a = {1, 6, 9};
+
+        int sum = 9;
+        int[] a = {3, 4, 4, 4, 8};
+
+        int possibleSum = knapSackSum(a, sum, a.length - 1);
+        System.out.println(possibleSum);
+    }
+
+    public static int knapSackSum (int[] a, int remainingSum, int n) {
+        if (n < 0 || remainingSum <= 0) {
+            return 0;
+        }
+
+        //check if current element (nth element) can be selected
+        if (a[n] > remainingSum) {
+            //nth element can't be selected, try n-1 element
+            return knapSackSum(a, remainingSum, n-1);
+        } else {
+            //current element can be selected so select it and continue
+            //selecting elements (including current one)
+            //until remaining sum is 0 or there is no element left
+            //to choose from
+            int sumWithThisElementSelected = a[n] + knapSackSum(a, remainingSum - a[n], n);
+
+            //now what if not selecting current element but the rest gives
+            //better results? So try that as well
+            int sumWithThisElementNotSelected = knapSackSum(a, remainingSum, n-1);
+
+            //return the maxium out of these two sums
+            return Math.max(sumWithThisElementSelected, sumWithThisElementNotSelected);
+        }
+    }
+
+
+    public static void testKnapsack() {
+        int money = 50;
+        int[] bundles = {19, 20};
+        int[] costs = {20, 24};
+
+//        int money = 4;
+//        int[] bundles = {10};
+//        int[] costs = {2};
+
+        int n = bundles.length - 1;
+
+        int count = findMaxBundles(money, costs, bundles, n);
+        System.out.println(count);
+    }
+
+    // Returns the maximum value that can be put in a knapsack of capacity W
+    static int findMaxBundles(int money, int costs[], int bundles[], int n) {
+        // Base Case
+        if (n < 0 || money <= 0)
+            return 0;
+
+        if (costs[n] > money) {
+            return findMaxBundles(money, costs, bundles, n - 1);
+        } else {
+            return Math.max( bundles[n] + findMaxBundles(money - costs[n], costs, bundles, n),
+                    findMaxBundles(money, costs, bundles, n-1)
+            );
+        }
+    }
+
+    public static boolean isPresent(HashMap<String, Integer> map, String words[]) {
+        for (String w : words) {
+            if (!map.containsKey(w)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static void testTextQueries() {
+        String[] sentences = {"jim likes marry", "kate likes tom", "tom does not like jim"};
+        String[] queries = {"jim tom", "likes"};
+        textQueries(sentences, queries);
+    }
+
+    public static void textQueries(String[] sentences, String[] queries) {
+        //for each query, print indices of sentences in which all words of that query are present
+        ArrayList<HashMap<String, Integer>> sList = new ArrayList<HashMap<String, Integer>>();
+
+        for (String s : sentences) {
+            String[] words = s.split(" ");
+
+            HashMap<String, Integer> map = new HashMap<String, Integer>(words.length);
+            for (String w : words) {
+                map.put(w, 1);
+            }
+            sList.add(map);
+        }
+
+        for (String query : queries) {
+            String[] words = query.split(" ");
+
+            ArrayList<Integer> indices = new ArrayList<>();
+            for (int i = 0; i < sList.size(); i++) {
+                HashMap<String, Integer> map = sList.get(i);
+                if (isPresent(map, words)) {
+                    indices.add(i);
+                }
+            }
+
+            if (indices.isEmpty()) {
+                System.out.println("-1");
+            } else {
+                for (int index : indices) {
+                    System.out.print(index + " ");
+                }
+                System.out.println();
+            }
+        }
+
+
+    }
+
+    public static void countNumbers() {
+        int N = 15;
+        // constraint on values of L gives us the
+        // time Complexity as O(N^0.5)
+        int count = 0;
+        for (int L = 1; L * (L + 1) < 2 * N; L++) {
+            float a = (float) ((1.0 * N - (L * (L + 1)) / 2) / (L + 1));
+            if (a - (int) a == 0.0)
+                count++;
+        }
+        System.out.println(countNumbersToSum(N));
+    }
+
+    public static long getValue(long i) {
+        return i * (i + 1);
+    }
+
+    public static boolean shouldCount(long num, long i) {
+        float value = (float) ((1.0 * num - (i * (i + 1)) / 2) / (i + 1));
+        int intValue = (int) value;
+
+        return (value - intValue == 0.0);
+    }
+
+    public static long countNumbersToSum(long num) {
+        long totalCount = 0;
+        for (long i = 1; getValue(i) < 2 * num; i++) {
+            if (shouldCount(num, i)) {
+                totalCount++;
+            }
+        }
+
+        return totalCount;
+    }
+
+    public static void testStringTokens() {
+        String str = "He is a very very good boy, isn't he?";
+        String[] tokens = str.split("[^a-zA-z]");
+        for (String token : tokens) {
+            if (!token.isEmpty()) {
+                System.out.println(token);
+            }
+        }
     }
 
     /***********************
@@ -104,8 +276,8 @@ public class Challenges {
      */
 
     public static void testRunningMedian() {
-        Integer []values1 = {12, 4, 5, 3, 8, 7};
-        Integer []values2 = {
+        Integer[] values1 = {12, 4, 5, 3, 8, 7};
+        Integer[] values2 = {
                 1,
                 2,
                 3,
@@ -142,7 +314,7 @@ public class Challenges {
             double median;
             if (maxQueue.size() == minQueue.size()) {
                 median = (minQueue.peek() + maxQueue.peek()) / 2.0;
-            } else if (minQueue.size() > maxQueue.size()){
+            } else if (minQueue.size() > maxQueue.size()) {
                 median = minQueue.peek();
             } else {
                 median = maxQueue.peek();
@@ -252,7 +424,6 @@ public class Challenges {
         queue.dequeue();
         queue.dequeue();
     }
-
 
 
     /***********************************************
